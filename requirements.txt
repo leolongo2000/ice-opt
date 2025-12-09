@@ -1,0 +1,19 @@
+# Core dependencies (installare con pip dopo aver creato l'ambiente conda/mamba)
+numpy>=1.20.0
+scipy>=1.7.0
+matplotlib>=3.5.0
+tifffile>=2024.0.0
+tqdm>=4.60.0
+termcolor>=2.0.0
+PyYAML>=6.0
+Pillow>=9.0.0
+imutils>=0.5.4  # Uncomment if using imutils features
+opencv-python>=4.5.0  # Uncomment if using OpenCV features
+
+
+# IMPORTANTE: HoloPy deve essere installato da conda-forge, non da pip!
+# Usa: mamba install -c conda-forge holopy
+# oppure: conda install -c conda-forge holopy
+# 
+# Il setup.py installa automaticamente HoloPy da conda-forge
+

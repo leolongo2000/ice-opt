@@ -1,0 +1,64 @@
+# =============================================================================
+# File di Configurazione di Esempio per ice-opt-hologram-analysis.py
+# =============================================================================
+# Questo è un file di esempio. Puoi copiarlo e modificarlo secondo le tue esigenze.
+# 
+# Esempio di utilizzo:
+#   python main/ice-opt-hologram-analysis.py -i /path/to/file.tif --config-file config_example.yml
+#
+# NOTA: Se non specifichi --config-file, il programma usa automaticamente
+#       config_default.yml dalla cartella main/
+# =============================================================================
+
+# ==================== PARAMETRI INPUT/OUTPUT =========================
+input: null                      # Path al file .tif o directory (null = usa --input da CLI)
+output_dir: null                 # Directory di output (null = sostituisce "measurements" con "results")
+
+# ==================== PARAMETRI DI OUTPUT =========================
+save_label: false              # Salva le immagini elaborate
+plot_label: false               # Mostra i plot durante l'elaborazione
+center_find_label: false      # Attiva ricerca centri
+save_format: ".tif"           # Formato file salvati
+
+# ==================== PARAMETRI IMMAGINE =========================
+dim: 1400                      # Dimensione immagine elaborata
+img_limits: [500, 1900, 1250, 2650]  # Limiti per il crop [x_min, x_max, y_min, y_max]
+pixel_size: 5.5                # Dimensione pixel in micrometri (prima della magnificazione)
+bit_camera: 16                 # Bit depth della camera
+
+# ==================== PARAMETRI ELABORAZIONE =========================
+N_frames_per_stack: 1         # Numero di frame da analizzare per stack (None = tutti)
+use_parallel_multiprocessing: false  # Usa multiprocessing
+N_cores: null                  # Numero di core da usare (null = automatico, 75% CPU)
+
+# ==================== PARAMETRI FISICI =========================
+medium_index: 1.00027          # Indice di rifrazione del mezzo
+illum_wavelen: 0.6335          # Lunghezza d'onda laser [um]
+
+# ==================== PARAMETRI RIPROPAGAZIONE =========================
+start_zrange: 260000           # Inizio range Z per ripropagazione [um]
+end_zrange: 270000             # Fine range Z per ripropagazione [um]
+steps: 20                      # Numero di step nel range Z
+
+# ==================== PARAMETRI LENTE (OPZIONALI) =========================
+f: null                        # Distanza focale lente (null = NaN, nessuna lente)
+q: 0                           # Distanza oggetto-lente
+
+# ==================== PARAMETRI RITAGLIO =========================
+offset_x: 400                  # Offset orizzontale per ritaglio [pxl]
+offset_y: 100                  # Offset verticale per ritaglio [pxl]
+
+# ==================== PARAMETRI RICERCA CENTRI =========================
+number_of_centers: 1           # Numero di centri da trovare
+center_threshold: 0.1          # Soglia per selezione centri
+center_blursize: 20.0          # Dimensione blur per ricerca centri
+
+# =============================================================================
+# NOTA: I seguenti parametri vengono calcolati automaticamente:
+#   - k (numero d'onda)
+#   - M, p (magnificazione)
+#   - pixel_size (dopo magnificazione)
+#   - satured_pixel_value
+#   - data_path, bkg_path, save_path, gif_path, ecc. (da input_file)
+# =============================================================================
+
