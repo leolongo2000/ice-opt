@@ -222,9 +222,15 @@ def rinomina_immagini_bg(path_cartella, estensione):
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -#
 
 def avg_image(input_path, plot_label=True, normalization=1):
-
-    N = len(os.listdir(input_path))                                         
-    images = sorted(os.listdir(input_path))                                 
+    # Filtra solo file immagine (ignora .gitkeep e altri file non immagine)
+    all_files = os.listdir(input_path)
+    image_extensions = ('.tif', '.tiff', '.png', '.jpg', '.jpeg', '.bmp', '.gif')
+    images = sorted([f for f in all_files if f.lower().endswith(image_extensions)])
+    
+    if len(images) == 0:
+        raise ValueError(f"Nessun file immagine trovato in {input_path}")
+    
+    N = len(images)
     x=0                                                             # inizializzo matrice normalizzata 
                                                                     # x = normalized(X)
     for i in range(N):
@@ -263,9 +269,15 @@ def avg_image(input_path, plot_label=True, normalization=1):
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -#
 
 def avg8(input_path, plot_label=True):
-
-    N = len(os.listdir(input_path))                                         
-    images = sorted(os.listdir(input_path))                 
+    # Filtra solo file immagine (ignora .gitkeep e altri file non immagine)
+    all_files = os.listdir(input_path)
+    image_extensions = ('.tif', '.tiff', '.png', '.jpg', '.jpeg', '.bmp', '.gif')
+    images = sorted([f for f in all_files if f.lower().endswith(image_extensions)])
+    
+    if len(images) == 0:
+        raise ValueError(f"Nessun file immagine trovato in {input_path}")
+    
+    N = len(images)
     som=0
     for i in range(N):
         ProgressBar(1 - (N - (i+1))/N)
@@ -293,9 +305,15 @@ def avg8(input_path, plot_label=True):
 
 
 def avg16(input_path, plot_label=True):
-
-    N = len(os.listdir(input_path))                                         
-    images = sorted(os.listdir(input_path))                 
+    # Filtra solo file immagine (ignora .gitkeep e altri file non immagine)
+    all_files = os.listdir(input_path)
+    image_extensions = ('.tif', '.tiff', '.png', '.jpg', '.jpeg', '.bmp', '.gif')
+    images = sorted([f for f in all_files if f.lower().endswith(image_extensions)])
+    
+    if len(images) == 0:
+        raise ValueError(f"Nessun file immagine trovato in {input_path}")
+    
+    N = len(images)
     som=0
     for i in range(N):
         # ProgressBar(1 - (N - (i+1))/N)

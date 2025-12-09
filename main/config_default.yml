@@ -22,6 +22,23 @@ bit_camera: 16                 # Bit depth della camera, al momento non è utili
                                # ma per calcolare satured_pixel_value = 2^bit_camera - 1, 
                                # che non viene mai utilizzato nel flusso principale.
 
+# ==================== PARAMETRI ELABORAZIONE =========================
+N_frames_per_stack: 10        # Numero di frame da analizzare per stack (None = tutti)
+use_parallel_multiprocessing: true  # Usa multiprocessing
+N_cores: null                  # Numero di core da usare (null = automatico, 75% CPU)
+
+
+# ==================== PARAMETRI FISICI =========================
+medium_index: 1.00027          # Indice di rifrazione del mezzo
+illum_wavelen: 0.6335          # Lunghezza d'onda laser [um]
+
+# ==================== PARAMETRI RIPROPAGAZIONE =========================
+start_zrange: 260000           # Inizio range Z per ripropagazione [um]
+end_zrange: 270000             # Fine range Z per ripropagazione [um]
+steps: 30                      # Numero di step nel range Z
+
+
+
 # ==================== PARAMETRI SPECCHI (NON TOCCARE) =========================
 # Questi parametri sono utilizzati solo per il calcolo della magnificazione.
 # Non sono utilizzati nel flusso principale.
