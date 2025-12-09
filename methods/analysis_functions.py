@@ -525,6 +525,10 @@ def get_params_from_init(config_file=None, is_cli_mode=False):
         # Gestisci 'input' dal config: converte in input_file o input_dir in base al tipo
         if params.get('input') is not None:
             input_path = params['input']
+            # Risolvi percorso relativo rispetto alla directory del config file
+            if not os.path.isabs(input_path):
+                config_dir = os.path.dirname(os.path.abspath(config_file))
+                input_path = os.path.normpath(os.path.join(config_dir, input_path))
             if os.path.isfile(input_path):
                 params['input_file'] = input_path
                 params['input_dir'] = None
@@ -574,6 +578,10 @@ def get_params_from_init(config_file=None, is_cli_mode=False):
         # Gestisci 'input' dal config: converte in input_file o input_dir in base al tipo
         if params.get('input') is not None:
             input_path = params['input']
+            # Risolvi percorso relativo rispetto alla directory del config file (config_default.yml è in main/)
+            if not os.path.isabs(input_path):
+                config_dir = os.path.dirname(os.path.abspath(default_config_path))
+                input_path = os.path.normpath(os.path.join(config_dir, input_path))
             if os.path.isfile(input_path):
                 params['input_file'] = input_path
                 params['input_dir'] = None

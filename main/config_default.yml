@@ -5,7 +5,7 @@
 # =============================================================================
 
 # ==================== PARAMETRI INPUT/OUTPUT =========================
-input: '/home/leo/Scrivania/unimi/lab-ottica/ice-opt2/my_holography/da_inviare/my_hologr/measurements/test_05NaCl/f0/data/0.5gNaCl_2025-11-21T14-59-36.008_51.tif'                      # Path al file .tif o directory (null = usa --input da CLI)
+input: '../measurements/test_05NaCl/f0/data/0.5gNaCl_2025-11-21T14-59-36.008_51.tif'                      # Path al file .tif o directory (null = usa --input da CLI)
 output_dir: null                 # Directory di output (null = sostituisce "measurements" con "results")
 
 # ==================== PARAMETRI DI OUTPUT =========================
