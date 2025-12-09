@@ -11,41 +11,41 @@ output_dir: null                 # Directory di output (null = sostituisce "meas
 # ==================== PARAMETRI DI OUTPUT =========================
 save_label: false              # Salva le immagini elaborate
 plot_label: false               # Mostra i plot durante l'elaborazione
-center_find_label: false      # Attiva ricerca centri
 save_format: ".png"           # Formato file salvati
 
 # ==================== PARAMETRI IMMAGINE =========================
-dim: 1500                      # Dimensione immagine elaborata
 img_limits: [450, 1950, 1200, 2700]  # Limiti per il crop [x_min, x_max, y_min, y_max]
+dim: 1500                      # Dimensione immagine elaborata, viene usato nella funzione crop_image
+                               # solo se img_limits non è specificato.
 pixel_size: 5.5                # Dimensione pixel in micrometri (prima della magnificazione)
-bit_camera: 16                 # Bit depth della camera
+bit_camera: 16                 # Bit depth della camera, al momento non è utilizzato, 
+                               # ma per calcolare satured_pixel_value = 2^bit_camera - 1, 
+                               # che non viene mai utilizzato nel flusso principale.
 
-# ==================== PARAMETRI ELABORAZIONE =========================
-N_frames_per_stack: None        # Numero di frame da analizzare per stack (None = tutti)
-use_parallel_multiprocessing: false  # Usa multiprocessing
-N_cores: null                  # Numero di core da usare (null = automatico, 75% CPU)
+# ==================== PARAMETRI SPECCHI (NON TOCCARE) =========================
+# Questi parametri sono utilizzati solo per il calcolo della magnificazione.
+# Non sono utilizzati nel flusso principale.
+# Avevano senso nel vecchio setup, utilizzato nella mia tesi3.
+# Nel nuovo setup non servono più, ma li lascio così per ora per non rompere la compatibilità.
 
-# ==================== PARAMETRI FISICI =========================
-medium_index: 1.00027          # Indice di rifrazione del mezzo
-illum_wavelen: 0.6335          # Lunghezza d'onda laser [um]
-
-# ==================== PARAMETRI RIPROPAGAZIONE =========================
-start_zrange: 260000           # Inizio range Z per ripropagazione [um]
-end_zrange: 270000             # Fine range Z per ripropagazione [um]
-steps: 30                      # Numero di step nel range Z
-
-# ==================== PARAMETRI LENTE (OPZIONALI) =========================
-f: null                        # Distanza focale lente (null = NaN, nessuna lente)
-q: 0                           # Distanza oggetto-lente
+f: null                        # Distanza focale specchio (null = NaN, nessuno specchio)
+q: 0                           # Distanza oggetto-specchio
 
 # ==================== PARAMETRI RITAGLIO =========================
 offset_x: 400                  # Offset orizzontale per ritaglio [pxl]
 offset_y: 100                  # Offset verticale per ritaglio [pxl]
 
 # ==================== PARAMETRI RICERCA CENTRI =========================
-number_of_centers: 1           # Numero di centri da trovare
-center_threshold: 0.1          # Soglia per selezione centri
-center_blursize: 20.0          # Dimensione blur per ricerca centri
+# center_find_label e i parametri correlati (number_of_centers, center_threshold, center_blursize) 
+# non sono utilizzati nel flusso principale. 
+# Vengono passati solo a cut_image, che a sua volta è chiamata solo da hologram_analysis e background, 
+# funzioni non più utilizzate per ora.
+# Vedi function_auxiliary.py e function_hologram.py per dettagli.
+
+# center_find_label: false      # Attiva ricerca centri, non implementato ancora
+# number_of_centers: 1           # Numero di centri da trovare
+# center_threshold: 0.1          # Soglia per selezione centri
+# center_blursize: 20.0          # Dimensione blur per ricerca centri
 
 # =============================================================================
 # NOTA: I seguenti parametri vengono calcolati automaticamente:
