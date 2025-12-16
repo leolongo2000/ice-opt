@@ -106,11 +106,11 @@ def print_summary_and_confirm(params, args, files_to_analyze):
     
     # Modalità
     mode_str = "SINGOLO FILE" if params['mode'] == 'single' else "DIRECTORY (BATCH)"
-    print(f"📋 MODALITÀ: {mode_str}")
+    print(f"MODALITÀ: {mode_str}")
     
     # Input
     if params['mode'] == 'single':
-        print(f"📁 FILE INPUT: {params['input_file']}")
+        print(f"FILE INPUT: {params['input_file']}")
         if os.path.exists(params['input_file']):
             file_size = os.path.getsize(params['input_file']) / (1024*1024)  # MB
             print(f"   Dimensione: {file_size:.2f} MB")
@@ -121,7 +121,7 @@ def print_summary_and_confirm(params, args, files_to_analyze):
             except Exception as e:
                 print(f"   [!] Impossibile determinare il numero di frame: {e}")
     else:
-        print(f"📁 DIRECTORY INPUT: {params['input_dir']}")
+        print(f"DIRECTORY INPUT: {params['input_dir']}")
         print(f"   File trovati: {len(os.listdir(params['input_dir']))}")
         if args.N is not None:
             print(f"   File da analizzare: {args.N} (specificato con -N)")
@@ -130,7 +130,7 @@ def print_summary_and_confirm(params, args, files_to_analyze):
     
     # Lista file (solo per mode='all', max 20 file)
     if params['mode'] == 'all' and files_to_analyze:
-        print(f"\n📄 LISTA FILE DA ANALIZZARE:")
+        print(f"\nLISTA FILE DA ANALIZZARE:")
         max_show = min(20, len(files_to_analyze))
         input_dir = params['input_dir']
         for i, fname in enumerate(files_to_analyze[:max_show], 1):
@@ -147,8 +147,8 @@ def print_summary_and_confirm(params, args, files_to_analyze):
         
     
     # Parametri elaborazione
-    print(f"\n⚙️  PARAMETRI ELABORAZIONE:")
-    print(f"   Multiprocessing: {'✅ SÌ' if params['use_parallel'] else '❌ NO'}")
+    print(f"\nPARAMETRI ELABORAZIONE:")
+    print(f"   Multiprocessing: {'SÌ' if params['use_parallel'] else 'NO'}")
     if params['use_parallel']:
         cpu_info = f"{params['cpu_count']} core" if params['cpu_count'] else "75% CPU (automatico)"
         print(f"   Core utilizzati: {cpu_info}")
@@ -156,9 +156,9 @@ def print_summary_and_confirm(params, args, files_to_analyze):
     print(f"   Frame per stack: {frames_info}")
     
     # Parametri output
-    print(f"\n💾 PARAMETRI OUTPUT:")
-    print(f"   Salva immagini: {'✅ SÌ' if params['save_label'] else '❌ NO'}")
-    print(f"   Mostra plot: {'✅ SÌ' if params['plot_label'] else '❌ NO'}")
+    print(f"\nPARAMETRI OUTPUT:")
+    print(f"   Salva immagini: {'SÌ' if params['save_label'] else 'NO'}")
+    print(f"   Mostra plot: {'SÌ' if params['plot_label'] else 'NO'}")
     if params['mode'] == 'single':
         print(f"   Path output: {params.get('gif_path', 'N/A')}")
     else:
@@ -166,12 +166,12 @@ def print_summary_and_confirm(params, args, files_to_analyze):
     
     # Config file
     if args.config_file:
-        print(f"\n📝 FILE CONFIGURAZIONE: {args.config_file}")
+        print(f"\nFILE CONFIGURAZIONE: {args.config_file}")
     else:
-        print(f"\n📝 FILE CONFIGURAZIONE: Valori di default")
+        print(f"\nFILE CONFIGURAZIONE: Valori di default")
     
     # Parametri fisici principali
-    print(f"\n🔬 PARAMETRI FISICI:")
+    print(f"\nPARAMETRI FISICI:")
     pixel_size = params.get('pixel_size', None)
     if pixel_size is not None:
         print(f"   Pixel size: {pixel_size:.2f} µm")
@@ -198,15 +198,15 @@ def print_summary_and_confirm(params, args, files_to_analyze):
     
     # Chiedi conferma
     while True:
-        response = input("\n❓ Procedere con l'analisi? [y/n]: ").strip().lower()
+        response = input("\nProcedere con l'analisi? [y/n]: ").strip().lower()
         if response in ['y', 'yes', 's', 'si', 'sì']:
-            print("\n🚀 Avvio analisi...\n")
+            print("\nAvvio analisi...\n")
             return True
         elif response in ['n', 'no']:
-            print("\n❌ Analisi annullata dall'utente.\n")
+            print("\nAnalisi annullata dall'utente.\n")
             return False
         else:
-            print("⚠️  Risposta non valida. Inserisci 'y' per procedere o 'n' per annullare.")
+            print("Risposta non valida. Inserisci 'y' per procedere o 'n' per annullare.")
 
 
 def main():

@@ -49,19 +49,19 @@ def check_conda_mamba():
     # Prova prima mamba
     success, stdout, stderr = run_command("mamba --version", shell=True)
     if success:
-        print("✅ Mamba trovato!")
+        print(" Mamba trovato!")
         print(f"   Versione: {stdout.strip()}")
         return "mamba"
     
     # Prova conda
     success, stdout, stderr = run_command("conda --version", shell=True)
     if success:
-        print("✅ Conda trovato!")
+        print(" Conda trovato!")
         print(f"   Versione: {stdout.strip()}")
-        print("⚠️  Nota: Mamba è più veloce. Considera di installare Miniforge3.")
+        print("  Nota: Mamba è più veloce. Considera di installare Miniforge3.")
         return "conda"
     
-    print("❌ ERRORE: Né mamba né conda sono installati!")
+    print(" ERRORE: Né mamba né conda sono installati!")
     print("\nPer installare:")
     print("  - Miniforge3 (mamba): https://github.com/conda-forge/miniforge/releases")
     print("  - Anaconda (conda): https://www.anaconda.com/products/distribution")
@@ -75,7 +75,7 @@ def check_environment_exists(manager):
     success, stdout, stderr = run_command(f"{manager} env list", shell=True)
     if success:
         if "ice-opt-env" in stdout:
-            print("⚠️  L'ambiente 'ice-opt-env' esiste già.")
+            print("  L'ambiente 'ice-opt-env' esiste già.")
             response = input("Vuoi ricrearlo? (s/n): ").strip().lower()
             if response in ['s', 'si', 'y', 'yes']:
                 print(f"Rimuovo l'ambiente esistente...")
@@ -85,7 +85,7 @@ def check_environment_exists(manager):
                 print("Uso l'ambiente esistente.")
                 return True
         else:
-            print("✅ Nessun ambiente esistente trovato.")
+            print(" Nessun ambiente esistente trovato.")
             return False
     return False
 
@@ -99,10 +99,10 @@ def create_environment(manager):
     )
     
     if success:
-        print("✅ Ambiente 'ice-opt-env' creato con successo!")
+        print(" Ambiente 'ice-opt-env' creato con successo!")
         return True
     else:
-        print(f"❌ Errore nella creazione dell'ambiente:")
+        print(f" Errore nella creazione dell'ambiente:")
         print(stderr)
         return False
 
@@ -110,7 +110,7 @@ def install_holopy(manager):
     """Installa HoloPy da conda-forge"""
     print_step(4, "Installazione HoloPy da conda-forge")
     
-    print("⚠️  IMPORTANTE: HoloPy deve essere installato da conda-forge, non da pip.")
+    print("  IMPORTANTE: HoloPy deve essere installato da conda-forge, non da pip.")
     print(f"Installo HoloPy usando {manager}...")
     
     success, stdout, stderr = run_command(
@@ -118,10 +118,10 @@ def install_holopy(manager):
     )
     
     if success:
-        print("✅ HoloPy installato con successo!")
+        print(" HoloPy installato con successo!")
         return True
     else:
-        print(f"⚠️  Avviso durante l'installazione di HoloPy:")
+        print(f"  Avviso durante l'installazione di HoloPy:")
         print(stderr)
         print("Puoi provare a installarlo manualmente dopo con:")
         print(f"  {manager} install -n ice-opt-env -c conda-forge holopy -y")
@@ -132,7 +132,7 @@ def install_requirements(manager):
     print_step(5, "Installazione dipendenze da requirements.txt")
     
     if not os.path.exists("requirements.txt"):
-        print("⚠️  File requirements.txt non trovato. Salto questo passo.")
+        print("  File requirements.txt non trovato. Salto questo passo.")
         return True
     
     print("Installo le dipendenze usando pip nell'ambiente 'ice-opt-env'...")
@@ -149,10 +149,10 @@ def install_requirements(manager):
     success, stdout, stderr = run_command(pip_cmd, shell=True)
     
     if success:
-        print("✅ Dipendenze installate con successo!")
+        print(" Dipendenze installate con successo!")
         return True
     else:
-        print(f"⚠️  Alcuni errori durante l'installazione:")
+        print(f"  Alcuni errori durante l'installazione:")
         print(stderr)
         print("\nPuoi provare a installarle manualmente dopo con:")
         print(f"  {manager} activate ice-opt-env")
@@ -161,7 +161,7 @@ def install_requirements(manager):
 
 def print_final_instructions(manager):
     """Stampa le istruzioni finali"""
-    print_header("🎉 Installazione Completata!")
+    print_header(" Installazione Completata!")
     
     print("L'ambiente 'ice-opt-env' è stato creato e configurato.")
     print("\nPer usare il software:")
@@ -177,7 +177,7 @@ def print_final_instructions(manager):
     print("\n3. Per disattivare l'ambiente:")
     print("   conda deactivate")
     
-    print("\n📚 Documentazione:")
+    print("\n Documentazione:")
     print("   - Guida installazione: INSTALL.md")
     print("   - Guida utilizzo: main/USAGE.md")
     print("   - Configurazione: main/config_example.yml")
@@ -189,9 +189,9 @@ def main():
     print_header("ICE-OPT Hologram Analysis - Setup Automatico")
     
     print("Questo script installerà:")
-    print("  ✅ Ambiente virtuale 'ice-opt-env' con Python 3.9")
-    print("  ✅ HoloPy da conda-forge")
-    print("  ✅ Tutte le dipendenze da requirements.txt")
+    print("   Ambiente virtuale 'ice-opt-env' con Python 3.9")
+    print("   HoloPy da conda-forge")
+    print("   Tutte le dipendenze da requirements.txt")
     print("\nPremi INVIO per continuare o Ctrl+C per annullare...")
     try:
         input()
@@ -210,7 +210,7 @@ def main():
     # 3. Crea ambiente (se necessario)
     if not env_exists:
         if not create_environment(manager):
-            print("\n❌ Errore nella creazione dell'ambiente. Installazione interrotta.")
+            print("\n Errore nella creazione dell'ambiente. Installazione interrotta.")
             sys.exit(1)
     
     # 4. Installa HoloPy

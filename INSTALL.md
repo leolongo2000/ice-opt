@@ -2,13 +2,13 @@
 
 Questa guida fornisce istruzioni dettagliate per l'installazione su Windows e Linux usando **mamba** (consigliato) o **conda**.
 
-## 📋 Prerequisiti
+##  Prerequisiti
 
 ### Installazione di Miniforge3 (Mamba) o Anaconda3
 
-**⚠️ IMPORTANTE**: Questo software richiede **mamba** o **conda** perché HoloPy è disponibile solo su conda-forge.
+**IMPORTANTE**: Questo software richiede **mamba** o **conda** perché HoloPy è disponibile solo su conda-forge.
 
-#### Opzione 1: Miniforge3 (Mamba) - ⭐ CONSIGLIATO
+#### Opzione 1: Miniforge3 (Mamba) - CONSIGLIATO
 
 **Mamba è più veloce di conda** e consigliato per questo progetto.
 
@@ -53,7 +53,7 @@ mamba --version
 conda --version
 ```
 
-## 🚀 Installazione Automatica (Consigliata)
+## Installazione Automatica (Consigliata)
 
 Il modo più semplice è usare lo script `setup.py` che automatizza tutto:
 
@@ -81,13 +81,13 @@ Il modo più semplice è usare lo script `setup.py` che automatizza tutto:
    ```
 
 Lo script `setup.py`:
-- ✅ Verifica che mamba/conda sia installato
-- ✅ Crea l'ambiente virtuale `ice-opt` con Python 3.9. Perchè 3.9? Purtroppo Holopy vuole python 3.9, le versioni successive non gli piacciono.
-- ✅ Installa HoloPy da conda-forge
-- ✅ Installa tutte le altre dipendenze da requirements.txt
-- ✅ Fornisce istruzioni per attivare l'ambiente
+-  Verifica che mamba/conda sia installato
+-  Crea l'ambiente virtuale `ice-opt` con Python 3.9. Perchè 3.9? Purtroppo Holopy vuole python 3.9, le versioni successive non gli piacciono.
+-  Installa HoloPy da conda-forge
+-  Installa tutte le altre dipendenze da requirements.txt
+-  Fornisce istruzioni per attivare l'ambiente
 
-## 📝 Installazione Manuale
+## Installazione Manuale
 
 Se preferisci installare manualmente:
 
@@ -124,7 +124,7 @@ pip install -r requirements.txt
 ```
 
 
-## ✅ Verifica Installazione
+## Verifica Installazione
 
 Dopo l'installazione, verifica che tutto funzioni:
 
@@ -144,7 +144,7 @@ Dovresti vedere la schermata di help con tutte le opzioni disponibili.
    python main/ice-opt-hologram-analysis.py -i /path/to/test/file.tif --yes
    ```
 
-## 📚 Prossimi Passi
+## Prossimi Passi
 
 - Consulta [main/USAGE.md](main/USAGE.md) per la documentazione completa
 - Esplora [main/config_example.yml](main/config_example.yml) per configurare i parametri

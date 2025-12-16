@@ -94,13 +94,13 @@ Il programma **inferisce automaticamente** la modalità:
 
 Per default, il programma mostra un **riepilogo completo** dell'analisi e chiede conferma prima di procedere. Il riepilogo include:
 
-- ✅ Modalità (singolo file o directory)
-- ✅ File/directory di input
-- ✅ Lista dei file che verranno analizzati
-- ✅ Parametri di elaborazione (multiprocessing, frame, core)
-- ✅ Parametri di output (salva immagini, mostra plot)
-- ✅ File di configurazione usato
-- ✅ Parametri fisici principali
+- Modalità (singolo file o directory)
+- File/directory di input
+- Lista dei file che verranno analizzati
+- Parametri di elaborazione (multiprocessing, frame, core)
+- Parametri di output (salva immagini, mostra plot)
+- File di configurazione usato
+- Parametri fisici principali
 
 Esempio di output:
 ```
@@ -108,37 +108,37 @@ Esempio di output:
                     RIEPILOGO ANALISI OLOGRAMMI
 ======================================================================
 
-📋 MODALITÀ: DIRECTORY (BATCH)
-📁 DIRECTORY INPUT: /path/to/directory/
-   File trovati: 50
-   File da analizzare: TUTTI (50)
+MODALITÀ: DIRECTORY (BATCH)
+DIRECTORY INPUT: /path/to/directory/
+  File trovati: 50
+  File da analizzare: TUTTI (50)
 
-📄 LISTA FILE DA ANALIZZARE:
-     1. file_001.tif
-     2. file_002.tif
-     ...
+LISTA FILE DA ANALIZZARE:
+  1. file_001.tif
+  2. file_002.tif
+  ...
 
-⚙️  PARAMETRI ELABORAZIONE:
-   Multiprocessing: ✅ SÌ
-   Core utilizzati: 4 core
-   Frame per stack: 10 frame per stack
+PARAMETRI ELABORAZIONE:
+  Multiprocessing: SÌ
+  Core utilizzati: 4 core
+  Frame per stack: 10 frame per stack
 
-💾 PARAMETRI OUTPUT:
-   Salva immagini: ✅ SÌ
-   Mostra plot: ✅ SÌ
-   Path output: /path/to/results/xgif
+PARAMETRI OUTPUT:
+  Salva immagini: SÌ
+  Mostra plot: SÌ
+  Path output: /path/to/results/xgif
 
-📝 FILE CONFIGURAZIONE: config.yml
+FILE CONFIGURAZIONE: config.yml
 
-🔬 PARAMETRI FISICI:
-   Pixel size: 5.50 µm
-   Lunghezza d'onda: 0.63 µm
-   Range Z: 260000 - 270000 µm
-   Step Z: 20
+PARAMETRI FISICI:
+  Pixel size: 5.50 µm
+  Lunghezza d'onda: 0.63 µm
+  Range Z: 260000 - 270000 µm
+  Step Z: 20
 
 ======================================================================
 
-❓ Procedere con l'analisi? [y/n]:
+Procedere con l'analisi? [y/n]:
 ```
 
 Per saltare la conferma (utile per script automatizzati):
