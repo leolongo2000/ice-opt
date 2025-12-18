@@ -10,7 +10,7 @@ output_dir: null                 # Directory di output (null = sostituisce "meas
 
 # ==================== PARAMETRI DI OUTPUT =========================
 save_label: false              # Salva le immagini elaborate
-plot_label: false               # Mostra i plot durante l'elaborazione
+plot_label: true               # Mostra i plot durante l'elaborazione
 save_format: ".png"           # Formato file salvati
 
 # ==================== PARAMETRI IMMAGINE =========================
@@ -24,8 +24,8 @@ bit_camera: 16                 # Bit depth della camera, al momento non è utili
 
 # ==================== PARAMETRI ELABORAZIONE =========================
 N_frames_per_stack: 10        # Numero di frame da analizzare per stack (None = tutti)
-use_parallel_multiprocessing: true  # Usa multiprocessing
-N_cores: null                  # Numero di core da usare (null = automatico, 75% CPU)
+use_parallel_multiprocessing: false  # Usa multiprocessing
+N_cores: null                  # Numero di core da usare (null = automatico, 50% CPU)
 
 
 # ==================== PARAMETRI FISICI =========================

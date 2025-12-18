@@ -1,3 +1,4 @@
+# %%
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -5,7 +6,6 @@ Created on Tue Nov 25 15:40:58 2025
 
 @author: leo
 """
-# %%
 
 # =============================================================================
 # IMPORT LIBRERIE
@@ -24,7 +24,15 @@ import numpy as np
 # SETUP PATH DI SISTEMA PER I MODULI CUSTOM
 # -----------------------------------------------------------------------------
 # Calcola il percorso assoluto della directory dello script corrente
-script_dir = os.path.dirname(os.path.abspath(__file__))
+try:
+    # Caso 1: Esecuzione standard (Terminale, Spyder, Script)
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+except NameError:
+    # Caso 2: Esecuzione interattiva (DataSpell, Jupyter, Console)
+    # In questo caso, usiamo la directory di lavoro corrente (cwd)
+    script_dir = os.getcwd()
+    print(f"Warning: Esecuzione interattiva rilevata. Uso cwd: {script_dir}")
+
 # Risale di un livello e entra in 'methods'
 methods_dir = os.path.join(script_dir, '../methods')
 
@@ -45,28 +53,28 @@ def run_normal_analysis(params):
     Utile per debug o macchine senza supporto multiprocessing.
     """
     print(f"\n ESECUZIONE NORMALE (Sequenziale) - Mode: {params['mode']}")
-    
+
     if params['mode'] == 'single':
         if not os.path.exists(params['input_file']):
             print(f" Errore: File non trovato: {params['input_file']}")
             return
 
         process_stack_singlecore(
-            stack_path = params['input_file'], 
-            bkg_path = params['bkg_path'], 
-            params = params, 
+            stack_path = params['input_file'],
+            bkg_path = params['bkg_path'],
+            params = params,
             N_images_per_stack = params['frames_limit']
         )
 
     elif params['mode'] == 'all':
-        
+
         scan_and_process_all(
-            img_dir = params['input_dir'], 
-            N = params['N_file_da_analizzare'], 
+            img_dir = params['input_dir'],
+            N = params['N_file_da_analizzare'],
             params = params,
             N_images_per_stack= params['frames_limit']
         )
-        
+
 def run_multiprocessing_analysis(params):
     """
     Gestisce l'esecuzione PARALLELA (Multi-core).
@@ -81,21 +89,21 @@ def run_multiprocessing_analysis(params):
 
         # Parallelismo sui frame dello stesso stack
         process_stack_multicore(
-            stack_path = params['input_file'], 
-            bkg_path = params['bkg_path'], 
-            params = params, 
+            stack_path = params['input_file'],
+            bkg_path = params['bkg_path'],
+            params = params,
             N_images_per_stack = params['frames_limit']
         )
 
     elif params['mode'] == 'all':
         # Parallelismo sui file della cartella
         scan_and_process_all_parallel(
-            img_dir = params['input_dir'], 
-            N_files_to_analyze = params['N_file_da_analizzare'], 
-            params = params, 
+            img_dir = params['input_dir'],
+            N_files_to_analyze = params['N_file_da_analizzare'],
+            params = params,
             N_images_per_stack = params['frames_limit']
         )
-        
+
 def print_summary_and_confirm(params, args, files_to_analyze):
     """
     Stampa un riepilogo completo dell'analisi e chiede conferma all'utente.
@@ -103,11 +111,11 @@ def print_summary_and_confirm(params, args, files_to_analyze):
     print("\n" + "="*70)
     print(" " * 20 + "RIEPILOGO ANALISI OLOGRAMMI")
     print("="*70 + "\n")
-    
+
     # Modalità
     mode_str = "SINGOLO FILE" if params['mode'] == 'single' else "DIRECTORY (BATCH)"
     print(f"MODALITÀ: {mode_str}")
-    
+
     # Input
     if params['mode'] == 'single':
         print(f"FILE INPUT: {params['input_file']}")
@@ -127,10 +135,10 @@ def print_summary_and_confirm(params, args, files_to_analyze):
             print(f"   File da analizzare: {args.N} (specificato con -N)")
         else:
             print(f"   File da analizzare: TUTTI ({len(files_to_analyze)})")
-    
+
     # Lista file (solo per mode='all', max 20 file)
     if params['mode'] == 'all' and files_to_analyze:
-        print(f"\nLISTA FILE DA ANALIZZARE:")
+        print("\nLISTA FILE DA ANALIZZARE:")
         max_show = min(20, len(files_to_analyze))
         input_dir = params['input_dir']
         for i, fname in enumerate(files_to_analyze[:max_show], 1):
@@ -144,58 +152,58 @@ def print_summary_and_confirm(params, args, files_to_analyze):
                 print(f"   {i:3d}. {fname} [!] Impossibile determinare il numero di frame: {e}")
         if len(files_to_analyze) > max_show:
             print(f"   ... e altri {len(files_to_analyze) - max_show} file")
-        
-    
+
+
     # Parametri elaborazione
-    print(f"\nPARAMETRI ELABORAZIONE:")
+    print("\nPARAMETRI ELABORAZIONE:")
     print(f"   Multiprocessing: {'SÌ' if params['use_parallel'] else 'NO'}")
     if params['use_parallel']:
         cpu_info = f"{params['cpu_count']} core" if params['cpu_count'] else "75% CPU (automatico)"
         print(f"   Core utilizzati: {cpu_info}")
     frames_info = f"{params['frames_limit']} frame" if params['frames_limit'] is not None else "Tutti i frame"
     print(f"   Frame per stack: {frames_info}")
-    
+
     # Parametri output
-    print(f"\nPARAMETRI OUTPUT:")
+    print("\nPARAMETRI OUTPUT:")
     print(f"   Salva immagini: {'SÌ' if params['save_label'] else 'NO'}")
     print(f"   Mostra plot: {'SÌ' if params['plot_label'] else 'NO'}")
     if params['mode'] == 'single':
         print(f"   Path output: {params.get('gif_path', 'N/A')}")
     else:
         print(f"   Path output: {params.get('gif_path', 'N/A')}")
-    
+
     # Config file
     if args.config_file:
         print(f"\nFILE CONFIGURAZIONE: {args.config_file}")
     else:
-        print(f"\nFILE CONFIGURAZIONE: Valori di default")
-    
+        print("\nFILE CONFIGURAZIONE: Valori di default")
+
     # Parametri fisici principali
-    print(f"\nPARAMETRI FISICI:")
+    print("\nPARAMETRI FISICI:")
     pixel_size = params.get('pixel_size', None)
     if pixel_size is not None:
         print(f"   Pixel size: {pixel_size:.2f} µm")
     else:
-        print(f"   Pixel size: N/A")
+        print("   Pixel size: N/A")
     illum_wavelen = params.get('illum_wavelen', None)
     if illum_wavelen is not None:
         print(f"   Lunghezza d'onda: {illum_wavelen} µm")
     else:
-        print(f"   Lunghezza d'onda: N/A")
+        print("   Lunghezza d'onda: N/A")
     start_z = params.get('start_zrange', None)
     end_z = params.get('end_zrange', None)
     if start_z is not None and end_z is not None:
         print(f"   Range Z: {start_z} - {end_z} µm")
     else:
-        print(f"   Range Z: N/A")
+        print("   Range Z: N/A")
     steps = params.get('steps', None)
     if steps is not None:
         print(f"   Step Z: {steps}")
     else:
-        print(f"   Step Z: N/A")
-    
+        print("   Step Z: N/A")
+
     print("\n" + "="*70)
-    
+
     # Chiedi conferma
     while True:
         response = input("\nProcedere con l'analisi? [y/n]: ").strip().lower()
@@ -208,9 +216,30 @@ def print_summary_and_confirm(params, args, files_to_analyze):
         else:
             print("Risposta non valida. Inserisci 'y' per procedere o 'n' per annullare.")
 
+def _is_ipython_environment():
+    """Rileva se siamo in un ambiente IPython/Jupyter"""
+    try:
+        get_ipython()
+        return True
+    except NameError:
+        return False
 
-def main():
-    
+def parse_arguments():
+    """Parsing degli argomenti da riga di comando.
+
+    - In modalità CLI, gli argomenti da riga di comando sovrascrivono i valori di config_default.yml.
+    - In modalità IDE (IPython/Jupyter o senza argomenti), i valori vengono presi da config_default.yml.
+    """
+    # Se siamo in IPython/Jupyter, filtra sys.argv per rimuovere argomenti del kernel
+    if _is_ipython_environment():
+        # In ambiente IPython, usa solo il config file (non passare argomenti ad argparse)
+        args_to_parse = []
+    else:
+        # In ambiente normale, usa sys.argv ma filtra argomenti che non sono del nostro programma
+        # Rimuovi argomenti che sembrano essere file JSON del kernel Jupyter
+        args_to_parse = [arg for arg in sys.argv[1:] if not (arg.endswith('.json') and 'kernel' in arg)
+                         and not arg.startswith(('--mode=', '--host=', '--port='))]
+
     parser = argparse.ArgumentParser(description='Hologram Analysis')
     parser.add_argument('--input', '-i', type=str, default=None,
                         help="Path al singolo file .tif o directory con file .tif (opzionale se specificato nel config file)")
@@ -219,7 +248,7 @@ def main():
     parser.add_argument('--frames', '-f', type=int, default=None,
                         help="Limite frame per stack (opzionale, default: tutti i frame)")
     # Flag per attivare il Multiprocessing
-    parser.add_argument('--parallel', '-mp', action='store_true', 
+    parser.add_argument('--parallel', '-mp', action='store_true',
                         help="Abilita il multiprocessing (più veloce)")
     parser.add_argument('--jobs', '-j', type=int, default=None,
                         help="Numero di core da utilizzare (es. -j 4). Se non specificato usa il 75%% della CPU.")
@@ -231,25 +260,44 @@ def main():
                         help="Directory di output (default: sostituisce 'measurements' con 'results' nel path di input)")
     parser.add_argument('--yes', '-y', action='store_true',
                         help="Salta la conferma e procede automaticamente")
-    args = parser.parse_args()
-    
-    # Determina se siamo in CLI mode (len(sys.argv) > 1) o IDE mode
-    is_cli_mode = len(sys.argv) > 1
-    
+
+    if _is_ipython_environment() and not args_to_parse:
+        args = parser.parse_args([])
+    else:
+        args = parser.parse_args(args_to_parse)
+
+
+    return args, parser
+
+def main():
+
+    args, parser = parse_arguments()
+
+    is_ipython = _is_ipython_environment()
+    if is_ipython:
+        # In IPython/Jupyter, considera sempre modalità IDE
+        is_cli_mode = False
+    else:
+        # In ambiente normale, controlla se ci sono argomenti validi (escludendo file JSON del kernel)
+        valid_args = [arg for arg in sys.argv[1:] if not (arg.endswith('.json') and 'kernel' in arg)
+                      and not arg.startswith(('--mode=', '--host=', '--port='))] # per dataspell
+        is_cli_mode = len(valid_args) > 0
+
+
     # 1. Caricamento parametri: da config file se specificato, altrimenti config_default.yml
     try:
         init_params = get_params_from_init(config_file=args.config_file, is_cli_mode=is_cli_mode)
     except ValueError as e:
         # Gestisce errori di configurazione (es. input_file e input_dir entrambi specificati)
-        print(f"\n❌ {str(e)}\n")
+        print(f"\n{str(e)}\n")
         sys.exit(1)
-    
+
     # 2. Gestione input: priorità a -i se specificato, altrimenti usa il config file
     if args.input is not None:
         # Input da CLI ha priorità
         if not os.path.exists(args.input):
             parser.error(f"ERRORE: Il path '{args.input}' non esiste.")
-        
+
         # Inferisci mode da -i
         if os.path.isdir(args.input):
             args.mode = 'all'
@@ -310,14 +358,14 @@ def main():
                 files_to_analyze = all_files
     elif params['mode'] == 'single':
         files_to_analyze = [os.path.basename(params['input_file'])]
-    
+
     # 4. Mostra riepilogo e chiedi conferma (a meno che non sia specificato --yes)
     if not args.yes:
         if not print_summary_and_confirm(params, args, files_to_analyze):
             sys.exit(0)
-    
+
     use_parallel = params['use_parallel']
-    
+
     # 5. ROUTING PRINCIPALE
     if use_parallel:
         run_multiprocessing_analysis(params)
@@ -328,9 +376,9 @@ def main():
 if __name__ == '__main__':
     # Necessario per Multiprocessing su Windows/Linux
     multiprocessing.freeze_support()
-    
+
     start_time = time.time()
-    
+
     main()
-    
+
     print("\n--- Tempo totale esecuzione: %.2f seconds ---" % (time.time() - start_time))
